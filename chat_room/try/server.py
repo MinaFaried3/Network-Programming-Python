@@ -42,20 +42,21 @@ def receive(from_cli):
 
 
 def handle():
-    # 1- accept
-    client, address = server_socket.accept()
-    # 2- send nick
-    client.send("NICK".encode('ascii'))
-    # 3- get name
-    name = client.recv(1024).decode('ascii')
-    # 4- add to lists
-    clients.append(client)
-    names.append(name)
-    # 5- tell all
-    broadcast(name + " join chat")
-    # 6- thread
-    thread = Thread(target=receive, args=(client,))
-    thread.start()
+    while True:
+        # 1- accept
+        client, address = server_socket.accept()
+        # 2- send nick
+        client.send("NICK".encode('ascii'))
+        # 3- get name
+        name = client.recv(1024).decode('ascii')
+        # 4- add to lists
+        clients.append(client)
+        names.append(name)
+        # 5- tell all
+        broadcast(name + " join chat")
+        # 6- thread
+        thread = Thread(target=receive, args=(client,))
+        thread.start()
 
 
 handle()
