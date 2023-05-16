@@ -22,7 +22,8 @@ def resolve_email_domain(domain: str):
     if answer.rrset is not None:
         records = sorted(answer.rrset)
         for record in records:
-            print(record)
+            print(record.preference)  # priority
+            print(record.exchange)  # name
             name = record.exchange.to_text(omit_final_dot=True)
             print(name)
             convert_to_ip(name)
